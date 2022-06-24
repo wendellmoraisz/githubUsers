@@ -1,4 +1,5 @@
 import React from "react";
+import * as S from "./styles"
 
 interface Props {
     children: JSX.Element[]
@@ -6,10 +7,10 @@ interface Props {
 
 function Layout( { children }: Props) {
     return (
-    <section>
+    <S.WrapperLayout>
         <header>aaa</header>
         {children}
-    </section>
+    </S.WrapperLayout>
     );
 }
 
