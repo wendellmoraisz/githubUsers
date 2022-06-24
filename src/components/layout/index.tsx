@@ -8,7 +8,6 @@ interface Props {
 function Layout( { children }: Props) {
     return (
     <S.WrapperLayout>
-        <header>aaa</header>
         {children}
     </S.WrapperLayout>
     );
