@@ -37,7 +37,7 @@ function Profile() {
                 </div>
                 <S.WrapperStatusCount>
                     <div>
-                        <h4>Seguidores</h4>
+                        <h4>Followers</h4>
                         <span>{user.followers}</span>
                     </div>
                     <div>

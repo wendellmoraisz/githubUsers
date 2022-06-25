@@ -46,3 +46,9 @@ export const WrapperTabPanel = styled(TabPanel)`
         display: block;
     }
 `;
+
+export const WrapperList = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+`;

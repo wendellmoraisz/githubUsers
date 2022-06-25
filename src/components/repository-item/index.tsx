@@ -1,3 +1,5 @@
+import * as S from "./styles";
+
 
 interface Props {
     name: string
@@ -8,15 +10,15 @@ interface Props {
 function RepositoryItem({name, linkToRepo, fullName}: Props) {
 
     return (
-        <div>
-            <h2>{name}</h2>
-            <h4>full name repo:</h4>
-            <a href={linkToRepo}
-             target="_blank"
+        <S.Wrapper>
+            <S.WrapperTitle>{name}</S.WrapperTitle>
+            <S.WrapperFullName>full name repo:</S.WrapperFullName>
+            <S.WrapperLink href={linkToRepo}
+             target="blank"
              >
                 {fullName}
-                </a>
-        </div>
+                </S.WrapperLink>
+        </S.Wrapper>
     );
 }
 
