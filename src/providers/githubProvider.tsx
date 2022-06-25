@@ -19,6 +19,8 @@ interface User {
 interface GithubContextType {
     user: User
     getUser: (username: string) => void 
+    loading: boolean
+    hasUser: boolean
 }
 
 interface Props {
@@ -39,7 +41,9 @@ export const GithubContext = createContext<GithubContextType>({
         publicGists: 0,
         publicRepos: 0,
     },
-    getUser: (username: string) => {}
+    getUser: (username: string) => {},
+    loading: true,
+    hasUser: false,
 });
 
 function GithubProvider({ children }: Props) {
@@ -57,7 +61,9 @@ function GithubProvider({ children }: Props) {
             followers: 0,
             publicGists: 0,
             publicRepos: 0,
-        }
+        },
+        loading: true,
+        hasUser: false
     });
 
     const getUser = (username: string) => {
@@ -76,15 +82,25 @@ function GithubProvider({ children }: Props) {
                         following: data.following,
                         publicGists: data.publicGists,
                         publicRepos: data.publicRepos,
-                    }
+                    },
+                    loading: true,
+                    hasUser: true
                 });
-            });
+            })
+            .finally(() => {
+                setGithubState((prevState) => ({
+                    ...prevState,
+                    loading: false
+                }))
+            })
     }
 
-    const {user} = githubState;
+    const { user, loading, hasUser } = githubState;
     const contextValue = {
         user,
-        getUser: useCallback((username: string) => getUser(username), [])
+        getUser: useCallback((username: string) => getUser(username), []),
+        loading,
+        hasUser
     }
 
     return (
