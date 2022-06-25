@@ -13,7 +13,7 @@ function RepositoryItem({name, linkToRepo, fullName}: Props) {
         <S.Wrapper>
             <S.WrapperTitle>{name}</S.WrapperTitle>
             <S.WrapperFullName>full name repo:</S.WrapperFullName>
-            <S.WrapperLink href={linkToRepo}
+            <S.WrapperLink href={`https://github.com/${linkToRepo}`}
              target="blank"
              >
                 {fullName}
