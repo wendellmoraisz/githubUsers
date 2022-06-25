@@ -1,42 +1,6 @@
-import { type } from "@testing-library/user-event/dist/type";
-import React, { createContext, ReactNode, useCallback, useState } from "react";
+import React, { createContext, useCallback, useState } from "react";
 import api from "../services/api";
-
-interface User {
-    id: number
-    avatar: string
-    login: string | null
-    name: string 
-    publicURL: string
-    blog: string | null
-    company: string | null
-    location: string | null
-    followers: number
-    following: number
-    publicGists: number
-    publicRepos: number
-}
-
-interface Repositories {
-    id: number
-    name: string
-    full_name: string
-}
-
-interface GithubContextType {
-    user: User
-    getUser: (username: string) => void 
-    getUserRepos: (username: string) => void 
-    getUserStarred: (username: string) => void 
-    loading: boolean
-    hasUser: boolean
-    repositories: Repositories[]
-    starred: Repositories[]
-}
-
-interface Props {
-    children: ReactNode
-}
+import { GithubContextType, Props, } from "./providerTypes";
 
 export const GithubContext = createContext<GithubContextType>({
     user: {
