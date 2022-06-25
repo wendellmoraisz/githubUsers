@@ -1,3 +1,4 @@
+import Header from "./components/header";
 import Layout from "./components/layout";
 import Profile from "./components/profile";
 import Repositories from "./components/repositories";
@@ -10,6 +11,7 @@ function App() {
       <GithubProvider>
       <ResetCSS/>
       <Layout>
+        <Header/>
         <Profile/>
         <Repositories/>
       </Layout>

@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { GithubContext } from "../providers/githubProvider";
 
 function useGithub () {
-    const githubState = useContext( GithubContext );
+    const { user, getUser } = useContext( GithubContext );
 
-    return { githubState };
+    return { user, getUser };
 };
 
 export default useGithub;

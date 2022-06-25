@@ -1,9 +1,11 @@
 import { type } from "@testing-library/user-event/dist/type";
-import React, { Children, createContext, Provider, ProviderProps, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useState } from "react";
+import api from "../services/api";
 
 interface User {
-    login: string | null,
-    name: string | null,
+    avatar: string
+    login: string | null
+    name: string | null
     publicURL: string
     blog: string | null
     company: string | null
@@ -16,32 +18,74 @@ interface User {
 
 interface GithubContextType {
     user: User
-    repositories: [] | null
-    starred: [] | null
+    getUser: (username: string) => void 
 }
 
-export const GithubContext = createContext<GithubContextType | null>(null);
+interface Props {
+    children: ReactNode
+}
 
-function GithubProvider ({ children }) {
+export const GithubContext = createContext<GithubContextType>({
+    user: {
+        avatar: '',
+        login: null,
+        name: null,
+        publicURL: '',
+        blog: null,
+        company: null,
+        location: null,
+        following: 0,
+        followers: 0,
+        publicGists: 0,
+        publicRepos: 0,
+    },
+    getUser: (username: string) => {}
+});
+
+function GithubProvider({ children }: Props) {
 
     const [githubState, setGithubState] = useState({
         user: {
+            avatar: '',
             login: null,
             name: null,
             publicURL: '',
             blog: null,
             company: null,
             location: null,
-            followers: 0,
             following: 0,
+            followers: 0,
             publicGists: 0,
             publicRepos: 0,
-        },
-        repositories: null,
-        starred: null,
+        }
     });
 
-    const contextValue = githubState;
+    const getUser = (username: string) => {
+        api.get(`users/${username}`)
+            .then(({ data }) => {
+                setGithubState({
+                     user: {
+                        avatar: data.avatar_url,
+                        login: data.login,
+                        name: data.name,
+                        publicURL: data.html_url,
+                        blog: data.blog,
+                        company: data.company,
+                        location: data.location,
+                        followers: data.followers,
+                        following: data.following,
+                        publicGists: data.publicGists,
+                        publicRepos: data.publicRepos,
+                    }
+                });
+            });
+    }
+
+    const {user} = githubState;
+    const contextValue = {
+        user,
+        getUser: useCallback((username: string) => getUser(username), [])
+    }
 
     return (
         <GithubContext.Provider
